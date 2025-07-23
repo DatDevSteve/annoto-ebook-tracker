@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "693469646926",
+    "project_id": "ebook-app-76f7d",
+    "storage_bucket": "ebook-app-76f7d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693469646926:android:5866756dec333531a0f31f",
+        "android_client_info": {
+          "package_name": "com.annoto.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMtge7wcvAae2qlgFOs6OYE3mH1LJphYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693469646926:android:3928856d922eb2f9a0f31f",
+        "android_client_info": {
+          "package_name": "com.example.annoto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMtge7wcvAae2qlgFOs6OYE3mH1LJphYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
