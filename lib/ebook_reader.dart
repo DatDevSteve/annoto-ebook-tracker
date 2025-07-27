@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:epub_view/epub_view.dart';
 import 'package:annoto/ui_elements/main_appBar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class EbookReader extends StatefulWidget {
@@ -39,9 +40,20 @@ class _EbookReaderState extends State<EbookReader> {
 
   @override
   Widget build(BuildContext context) {
+    double scrSize = 0;
+    if (kIsWeb) {
+      scrSize = 700;
+    } else {
+      scrSize = MediaQuery.sizeOf(context).height;
+    }
     return Scaffold(
       appBar: CustomAppbar(title: "READER"),
-      body: EpubView(controller: _epubController),
+      body: Center(
+        child: Container(
+          width: scrSize,
+          child: EpubView(controller: _epubController)
+          ),
+      ),
     );
   }
 }

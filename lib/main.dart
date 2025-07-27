@@ -1,8 +1,8 @@
 import 'package:annoto/firebase_options.dart';
-import 'package:flutter/foundation.dart'; 
+import 'package:flutter/foundation.dart';
 import 'package:annoto/screen_manager.dart';
 import 'package:annoto/login_signup/login_page.dart';
-import 'package:annoto/login_signup/signup_page.dart';
+import 'package:annoto/welcome.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ import 'package:annoto/library_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  //await FirebaseAuth.instance.signOut(); //debugging
+  await FirebaseAuth.instance.signOut(); //debugging
 
   // Conditional block to make necessary changes on web platform compatibility
   if (!kIsWeb) {
@@ -54,12 +54,15 @@ class _MyAppState extends State<MyApp> {
             return HomeScreen();
           }
           if (asyncSnapshot.data == null) {
-            return SignupPage();
+            return WelcomePage();
           }
           if (asyncSnapshot.hasError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Unexpected Error, Please Log in again")),
+            );
             return LoginPage();
           }
-          return LoginPage();
+          return WelcomePage();
         },
       ),
     );

@@ -55,26 +55,27 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      appBar: authAppBar(title: "ANNOTO"),
+      appBar: AuthAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: double.infinity, height: 250),
+          SizedBox(width: double.infinity, height: 300),
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
+            padding: const EdgeInsets.fromLTRB(5, 50, 5, 0),
             child: Center(
               child: Container(
-                constraints: BoxConstraints(maxHeight: screenHeight - 300),
-                width: 500,
+                //constraints: BoxConstraints(maxHeight: screenHeight - 300),
+                width: 550,
+                height: screenHeight-350,
                 child: Card(
-                  margin: EdgeInsets.all(10),
+                  //margin: EdgeInsets.all(10),
                   elevation: 10,
                   shadowColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(35),
-                      bottom: Radius.circular(35),
+                      //bottom: Radius.circular(35),
                     ),
                   ),
                   child: Padding(

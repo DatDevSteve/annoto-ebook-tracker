@@ -1,12 +1,32 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:ui';
 
-class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
-  const CustomAppbar({super.key, required this.title});
+  final Function? firstBtnFunc;
+  final Function? secondBtnFunc;
+  final Icons? firstBtnIco;
+  final Icons? secondBtnIco;
 
+  const CustomAppbar({
+    super.key,
+    required this.title,
+    required this.firstBtnFunc,
+    required this.secondBtnFunc,
+    required this.firstBtnIco,
+    required this.secondBtnIco,
+  });
+
+  @override
+  State<CustomAppbar> createState() => _CustomAppbarState();
+  
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => throw UnimplementedError();
+}
+
+class _CustomAppbarState extends State<CustomAppbar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -15,7 +35,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       ),
       toolbarHeight: 70,
       title: Text(
-        title,
+        widget.title,
         style: GoogleFonts.inriaSans(
           color: Color.fromRGBO(7, 113, 55, 1),
           fontWeight: FontWeight.w900,
@@ -28,19 +48,20 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       leading: TextButton(
         onPressed: () {
-          FirebaseAuth.instance.signOut();
+          widget.firstBtnFunc ?? FirebaseAuth.instance.signOut();
         },
-        child: Icon(Icons.exit_to_app, color: Colors.white, size: 30),
+        child: Icon((widget.firstBtnIco ?? Icons.exit_to_app) as IconData?, color: Colors.white, size: 30),
       ),
       actions: [
         TextButton(
-          onPressed: () {},
-          child: Icon(Icons.account_circle, color: Colors.white, size: 35),
+          onPressed: () {
+            widget.secondBtnFunc;
+          },
+          child: Icon((widget.secondBtnIco ?? Icons.account_circle) as IconData?, color: Colors.white, size: 35),
         ),
       ],
     );
   }
 
-  @override
   Size get preferredSize => const Size.fromHeight(70);
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class authAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-  const authAppBar({super.key, required this.title});
+class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const AuthAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {

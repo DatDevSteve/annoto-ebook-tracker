@@ -287,9 +287,13 @@ class _LibraryPageState extends State<LibraryPage> {
                                                                 .start,
                                                         children: [
                                                           Text(
-                                                            element['title'],
+                                                            element['title'] ??
+                                                                "Untitled Book",
                                                             textAlign:
                                                                 TextAlign.left,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                             style:
                                                                 GoogleFonts.inriaSans(
                                                                   fontWeight:
