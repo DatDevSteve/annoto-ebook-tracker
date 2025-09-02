@@ -1,16 +1,17 @@
-# annoto
+# ANNOTO- ALL IN ONE EBOOK READER AND TRACKER
+A simple, no fuss implementation of an EBook reading interface- but not just limited to reading EBooks.
 
-A new Flutter project.
+## ℹ️ You can: 
+ - Track your reading analytics, including how long you read- monthly, daily, or annualy.
+ - Highlight text with colors, so you not miss any of those catchphrases.
+ - Access your reading material and analytics from any device using your account.
 
-## Getting Started
+## ⚙️ Tech Stack:
+- Flutter- For App Framework.
+- Firebase- For user account management and realtime database storage of user's reading data.
+- Misc- Custom Javascript Injected implementation for highlighting text in EBook reader feature.
 
-This project is a starting point for a Flutter application.
+## ✅ Current Project Status: MVP (basic EBook reading implementation is done)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 🛠️ The app is single handedly being developed and maintained by me, and has not yet been developed with all the target features.
+#### More documentation and updates coming soon :)
