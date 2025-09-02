@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'package:hive/hive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:annoto/ebook_reader.dart';
+import 'package:text_marquee/text_marquee.dart';
 
 // Hive Storage Model Configuration:
 part 'library_page.g.dart';
@@ -249,199 +250,220 @@ class _LibraryPageState extends State<LibraryPage> {
                                           BuildContext context,
                                           StateSetter setModalState,
                                         ) {
-                                          return SizedBox(
-                                            height: 250,
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets.all(
-                                                              10.0,
-                                                            ),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                Radius.circular(
-                                                                  15,
-                                                                ),
+                                          return Expanded(
+                                            child: SizedBox(
+                                              height: 250,
+                                              child: Center(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                10.0,
                                                               ),
-                                                          child: Container(
-                                                            height: 230,
-                                                            width: 150,
-                                                            child:
-                                                                element['coverWidget'],
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                  Radius.circular(
+                                                                    15,
+                                                                  ),
+                                                                ),
+                                                            child: Container(
+                                                              height: 230,
+                                                              width: 150,
+                                                              child:
+                                                                  element['coverWidget'],
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            element['title'] ??
-                                                                "Untitled Book",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style:
-                                                                GoogleFonts.inriaSans(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            element['author'] ??
-                                                                "No Author",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                          ),
-                                                          Text(
-                                                            "Total Chapters: ${element['chapterCount'] ?? "Null"}",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                          ),
-                                                          SizedBox(height: 20),
-                                                          Row(
+                                                        SizedBox(
+                                                          //width: 440,
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
                                                             children: [
-                                                              ElevatedButton.icon(
-                                                                onPressed: () {
-                                                                  Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) => EbookReader(
-                                                                        bookBytes:
-                                                                            element['bookBytes'] ??
-                                                                            List<
-                                                                              int
-                                                                            >.filled(
-                                                                              0,
-                                                                              0,
-                                                                            ),
-                                                                      ),
-                                                                    ),
-                                                                  );
-                                                                },
-                                                                label: Text(
-                                                                  'Read',
-                                                                  style: textTheme
-                                                                      .bodySmall,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
+                                                              SingleChildScrollView(
+                                                                scrollDirection: Axis.horizontal,
+                                                                child: Text(
+                                                                  element['title'] ??
+                                                                      "Untitled Book",
+                                                                  style: GoogleFonts.inriaSans(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
                                                                 ),
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .arrow_circle_right_outlined,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  size: 20,
+                                                              ),
+                                                              Text(
+                                                                element['author'] ??
+                                                                    "No Author",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: GoogleFonts.inriaSans(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic,
+                                                                  fontSize: 16,
                                                                 ),
-                                                                style: ElevatedButton.styleFrom(
-                                                                  padding:
-                                                                      EdgeInsets.fromLTRB(
-                                                                        10,
-                                                                        20,
-                                                                        10,
-                                                                        20,
-                                                                      ),
-                                                                  backgroundColor:
-                                                                      Color.fromRGBO(
-                                                                        7,
-                                                                        113,
-                                                                        55,
-                                                                        1,
-                                                                      ),
+                                                              ),
+                                                              Text(
+                                                                "Total Chapters: ${element['chapterCount'] ?? "Null"}",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .left,
+                                                                style: GoogleFonts.inriaSans(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic,
+                                                                  fontSize: 16,
+                                                                  color: Color.fromRGBO(7, 113, 55, 1),
                                                                 ),
                                                               ),
                                                               SizedBox(
-                                                                width: 10,
+                                                                height: 20,
                                                               ),
-                                                              IconButton(
-                                                                style: ElevatedButton.styleFrom(
-                                                                  backgroundColor:
-                                                                      Color.fromRGBO(
-                                                                        7,
-                                                                        113,
-                                                                        55,
-                                                                        1,
-                                                                      ),
-                                                                ),
-                                                                onPressed: () {
-                                                                  setModalState(
-                                                                    () {
-                                                                      isToggled =
-                                                                          !isToggled;
-                                                                    },
-                                                                  );
-                                                                },
-                                                                icon: Icon(
-                                                                  isToggled
-                                                                      ? Icons
-                                                                            .favorite
-                                                                      : Icons
-                                                                            .favorite_border,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 10,
-                                                              ),
-                                                              IconButton(
-                                                                style: ElevatedButton.styleFrom(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .red,
-                                                                ),
-                                                                onPressed: () {
-                                                                  final index =
-                                                                      eBooks.indexOf(
-                                                                        element,
+                                                              Row(
+                                                                children: [
+                                                                  ElevatedButton.icon(
+                                                                    onPressed: () {
+                                                                      Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                          builder:
+                                                                              (
+                                                                                context,
+                                                                              ) => EbookReader(
+                                                                                bookBytes:
+                                                                                    element['bookBytes'] ??
+                                                                                    List<
+                                                                                      int
+                                                                                    >.filled(
+                                                                                      0,
+                                                                                      0,
+                                                                                    ),
+                                                                              ),
+                                                                        ),
                                                                       );
-                                                                  box.deleteAt(
-                                                                    index,
-                                                                  );
-                                                                  setState(() {
-                                                                    eBooks
-                                                                        .removeAt(
+                                                                    },
+                                                                    label: Text(
+                                                                      'Read',
+                                                                      style: textTheme
+                                                                          .bodySmall,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                    ),
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .arrow_circle_right_outlined,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      size: 20,
+                                                                    ),
+                                                                    style: ElevatedButton.styleFrom(
+                                                                      padding:
+                                                                          EdgeInsets.fromLTRB(
+                                                                            10,
+                                                                            20,
+                                                                            10,
+                                                                            20,
+                                                                          ),
+                                                                      backgroundColor:
+                                                                          Color.fromRGBO(
+                                                                            7,
+                                                                            113,
+                                                                            55,
+                                                                            1,
+                                                                          ),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  IconButton(
+                                                                    style: ElevatedButton.styleFrom(
+                                                                      backgroundColor:
+                                                                          Color.fromRGBO(
+                                                                            7,
+                                                                            113,
+                                                                            55,
+                                                                            1,
+                                                                          ),
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      setModalState(() {
+                                                                        isToggled =
+                                                                            !isToggled;
+                                                                      });
+                                                                    },
+                                                                    icon: Icon(
+                                                                      isToggled
+                                                                          ? Icons
+                                                                                .favorite
+                                                                          : Icons
+                                                                                .favorite_border,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 10,
+                                                                  ),
+                                                                  IconButton(
+                                                                    style: ElevatedButton.styleFrom(
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .red,
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      final index =
+                                                                          eBooks.indexOf(
+                                                                            element,
+                                                                          );
+                                                                      box.deleteAt(
+                                                                        index,
+                                                                      );
+                                                                      setState(() {
+                                                                        eBooks.removeAt(
                                                                           index,
                                                                         );
-                                                                  });
-                                                                  ScaffoldMessenger.of(
-                                                                    context,
-                                                                  ).showSnackBar(
-                                                                    SnackBar(
-                                                                      content: Text(
-                                                                        "Removed Book: '${element['title']}' from Library",
-                                                                      ),
+                                                                      });
+                                                                      ScaffoldMessenger.of(
+                                                                        context,
+                                                                      ).showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                                "Removed Book: '${element['title']}' from Library",
+                                                                              ),
+                                                                        ),
+                                                                      );
+                                                                    },
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .delete,
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
-                                                                  );
-                                                                },
-                                                                icon: Icon(
-                                                                  Icons.delete,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );

@@ -12,10 +12,10 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppbar({
     super.key,
     required this.title,
-    required this.firstBtnFunc,
-    required this.secondBtnFunc,
-    required this.firstBtnIco,
-    required this.secondBtnIco,
+    this.firstBtnFunc,
+    this.secondBtnFunc,
+    this.firstBtnIco,
+    this.secondBtnIco,
   });
 
   @override
@@ -23,7 +23,7 @@ class CustomAppbar extends StatefulWidget implements PreferredSizeWidget {
   
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => throw UnimplementedError();
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _CustomAppbarState extends State<CustomAppbar> {

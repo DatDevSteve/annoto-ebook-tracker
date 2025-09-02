@@ -15,7 +15,7 @@ import 'package:annoto/library_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseAuth.instance.signOut(); //debugging
+  //await FirebaseAuth.instance.signOut(); //Debugging: Sign out user on app start
 
   // Conditional block to make necessary changes on web platform compatibility
   if (!kIsWeb) {
@@ -25,7 +25,18 @@ void main() async {
     await Hive.initFlutter(); // Web uses IndexedDB
   }
   Hive.registerAdapter(LibStoreAdapter());
-  await Hive.openBox<LibStore>('ebooks');
+  
+  //await Hive.deleteBoxFromDisk('ebooks'); //DANGEROUS, ONLY FOR DEBUGGING: Deletes all stored eBooks, use with caution
+
+  try {
+  if (!Hive.isBoxOpen('ebooks')) {
+    await Hive.openBox<LibStore>('ebooks');
+  }
+} catch (e, stacktrace) {
+  debugPrint('Hive openBox error: $e');
+  debugPrint('$stacktrace');
+}
+
 
   runApp(const MyApp());
 }

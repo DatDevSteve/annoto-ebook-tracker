@@ -20,14 +20,14 @@ class LibStoreAdapter extends TypeAdapter<LibStore> {
       title: fields[0] as String,
       coverBytes: fields[1] as Uint8List,
       filepath: fields[2] as String,
-      author: fields[3] as String
+      author: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, LibStore obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)

@@ -47,6 +47,7 @@ dependencies:
   marquee: ^2.3.0
   flutter_epub_viewer: ^1.2.1
   epub_view: ^3.2.0
+  text_marquee: ^0.0.2
 
 
 
