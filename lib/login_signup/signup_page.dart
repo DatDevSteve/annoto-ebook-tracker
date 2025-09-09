@@ -2,7 +2,7 @@ import 'package:annoto/login_signup/custom_appbar.dart';
 import 'package:annoto/screen_manager.dart';
 import 'package:annoto/login_signup/login_page.dart';
 import 'package:annoto/ui_elements/transitions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// Removed: import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,28 +24,20 @@ class _SignupPageState extends State<SignupPage> {
     super.dispose();
   }
 
+  // Removed Firebase signup logic
   Future<void> createUserWithEmailPasswd() async {
     final email = _emailController.text.trim();
     final password = _passwdController.text.trim();
 
-    try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
+    // Placeholder for local signup logic or validation
+    if (email == "" || password == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter a valid Email ID or Password")),
       );
-      //print(userCredential);
-      Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
-    } on FirebaseAuthException catch (e) {
-      if (email == "" || password == "") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Please enter a valid Email ID or Password")),
-        );
-      } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('${e.message}')));
-      }
+      return;
     }
+    // Directly navigate to HomeScreen for demo/local mode
+    Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
   }
 
   @override
@@ -65,17 +57,14 @@ class _SignupPageState extends State<SignupPage> {
             padding: const EdgeInsets.fromLTRB(5, 50, 5, 0),
             child: Center(
               child: Container(
-                //constraints: BoxConstraints(maxHeight: screenHeight - 300),
                 width: 550,
                 height: screenHeight-350,
                 child: Card(
-                  //margin: EdgeInsets.all(10),
                   elevation: 10,
                   shadowColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(35),
-                      //bottom: Radius.circular(35),
                     ),
                   ),
                   child: Padding(
@@ -86,7 +75,6 @@ class _SignupPageState extends State<SignupPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          //SizedBox(height: 2),
                           Text(
                             'SIGN UP',
                             style: GoogleFonts.inriaSans(

@@ -3,7 +3,7 @@ import 'package:annoto/login_signup/custom_appbar.dart';
 import 'package:annoto/screen_manager.dart';
 import 'package:annoto/login_signup/signup_page.dart';
 import 'package:annoto/ui_elements/transitions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// Removed: import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,26 +25,19 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // Removed Firebase login logic
   Future<void> loginEmailPasswd() async {
     final email = _emailController.text.trim();
     final password = _passwdController.text.trim();
 
-    try {
-      // ignore: unused_local_variable
-      final userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
-    } on FirebaseAuthException catch (e) {
-      if (email == "" || password == "") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Please enter a valid Email ID or Password")),
-        );
-      } else {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('${e.message}')));
-      }
+    if (email == "" || password == "") {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter a valid Email ID or Password")),
+      );
+      return;
     }
+    // Directly navigate to HomeScreen for demo/local mode
+    Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
   }
 
   @override
@@ -64,16 +57,13 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.fromLTRB(5, 50, 5, 0),
             child: Center(
               child: Container(
-                //constraints: BoxConstraints(maxHeight: screenHeight - 300),
                 width: 550,
                 height: screenHeight-350,
                 child: Card(
                   elevation: 10,
-                  //margin: EdgeInsets.all(10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(35),
-                      //bottom: Radius.circular(35),
                     ),
                   ),
                   child: Padding(
@@ -84,7 +74,6 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          //SizedBox(height: 50),
                           Text(
                             'SIGN IN',
                             style: GoogleFonts.inriaSans(

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -48,7 +47,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
       centerTitle: true,
       leading: TextButton(
         onPressed: () {
-          widget.firstBtnFunc ?? FirebaseAuth.instance.signOut();
+          
         },
         child: Icon((widget.firstBtnIco ?? Icons.exit_to_app) as IconData?, color: Colors.white, size: 30),
       ),

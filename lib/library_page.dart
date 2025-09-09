@@ -8,37 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image/image.dart' as img;
 import 'dart:typed_data';
-import 'package:hive/hive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:annoto/ebook_reader.dart';
 import 'package:text_marquee/text_marquee.dart';
-
-// Hive Storage Model Configuration:
-part 'library_page.g.dart';
-
-final box = Hive.box<LibStore>('ebooks');
-
-@HiveType(typeId: 0)
-class LibStore extends HiveObject {
-  @HiveField(0)
-  late String title;
-
-  @HiveField(1)
-  late Uint8List coverBytes;
-
-  @HiveField(2)
-  late String filepath;
-
-  @HiveField(3)
-  late String author;
-
-  LibStore({
-    required this.title,
-    required this.coverBytes,
-    required this.filepath,
-    required this.author,
-  });
-}
 
 Widget _defaultCover() {
   return Container(
@@ -64,20 +36,7 @@ class _LibraryPageState extends State<LibraryPage> {
       debugPrint("/// POST FRAME CALLBACK: LOADING LIBRARY");
     });
     eBooks.clear();
-    for (var ebook in box.values) {
-      eBooks.add({
-        'title': ebook.title,
-        'coverWidget': Image.memory(
-          ebook.coverBytes,
-          fit: BoxFit.contain,
-          errorBuilder: (context, error, stackTrace) => _defaultCover(),
-        ),
-        'bookBytes': null,
-        'path': ebook.filepath,
-      });
-      setState(() {});
-      debugPrint('/// LOADED BOOK FROM LIBRARY');
-    }
+    setState(() {});
   }
 
   Future<void> loadEBook() async {
@@ -150,14 +109,6 @@ class _LibraryPageState extends State<LibraryPage> {
               'chapterCount': chapters?.length,
             });
           });
-          box.add(
-            LibStore(
-              title: bookTitle,
-              coverBytes: pngbytes,
-              filepath: bookPath ?? "",
-              author: author,
-            ),
-          );
           //debugPrint('/// LOADING BOOK TILE');
           ScaffoldMessenger.of(
             context,
@@ -223,7 +174,6 @@ class _LibraryPageState extends State<LibraryPage> {
                           return GestureDetector(
                             onLongPress: () async {
                               final index = eBooks.indexOf(element);
-                              box.deleteAt(index);
                               setState(() {
                                 eBooks.removeAt(index);
                               });
@@ -429,9 +379,6 @@ class _LibraryPageState extends State<LibraryPage> {
                                                                           eBooks.indexOf(
                                                                             element,
                                                                           );
-                                                                      box.deleteAt(
-                                                                        index,
-                                                                      );
                                                                       setState(() {
                                                                         eBooks.removeAt(
                                                                           index,
