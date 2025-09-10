@@ -5,6 +5,7 @@ import 'package:annoto/login_signup/signup_page.dart';
 import 'package:annoto/ui_elements/transitions.dart';
 // Removed: import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,20 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // Removed Firebase login logic
-  Future<void> loginEmailPasswd() async {
-    final email = _emailController.text.trim();
-    final password = _passwdController.text.trim();
-
-    if (email == "" || password == "") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter a valid Email ID or Password")),
-      );
-      return;
-    }
-    // Directly navigate to HomeScreen for demo/local mode
-    Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
-  }
+  Future<void> loginEmailPasswd() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Center(
               child: Container(
                 width: 550,
-                height: screenHeight-350,
+                height: screenHeight - 350,
                 child: Card(
                   elevation: 10,
                   shape: RoundedRectangleBorder(
@@ -118,7 +106,43 @@ class _LoginPageState extends State<LoginPage> {
                                 foregroundColor: Colors.white,
                               ),
                               onPressed: () async {
-                                await loginEmailPasswd();
+                                final supabase = Supabase.instance.client;
+                                final email = _emailController.text.trim();
+                                final password = _passwdController.text.trim();
+
+                                if (email == "" || password == "") {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        "Please enter a valid Email ID or Password",
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
+                                try {
+                                  final AuthResponse response = await supabase
+                                      .auth
+                                      .signInWithPassword(
+                                        password: password,
+                                        email: email,
+                                      );
+                                  if (response.session != null) {
+                                    
+                                    Navigator.of(context).pushReplacement(
+                                      transitionPage(() => HomeScreen()),
+                                    );
+                                    
+                                  }
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(e.toString()),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                }
                               },
                               child: Text(
                                 "Sign In",

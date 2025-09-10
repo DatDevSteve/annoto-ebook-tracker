@@ -1,6 +1,8 @@
 import 'dart:core';
 import 'dart:io';
+import 'package:annoto/login_signup/login_page.dart';
 import 'package:annoto/ui_elements/main_appBar.dart';
+import 'package:annoto/ui_elements/transitions.dart';
 import 'package:epubx/epubx.dart' as epubx;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,9 @@ import 'package:image/image.dart' as img;
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:annoto/ebook_reader.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:text_marquee/text_marquee.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 Widget _defaultCover() {
   return Container(
@@ -28,6 +32,7 @@ class LibraryPage extends StatefulWidget {
 
 class _LibraryPageState extends State<LibraryPage> {
   List<Map<String, dynamic>> eBooks = [];
+  final supabase = Supabase.instance.client;
 
   @override
   void initState() {
@@ -40,6 +45,8 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   Future<void> loadEBook() async {
+    /// Uses a file picker to pick the epub file, followed by extracting book title, author, chapters, coverpage bytes and book bytes
+    /// A list is created to map on ebook cover cards which are displayed on frontend to select a book and read it 
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowedExtensions: ["epub"],
       type: FileType.custom,
@@ -109,6 +116,7 @@ class _LibraryPageState extends State<LibraryPage> {
               'chapterCount': chapters?.length,
             });
           });
+
           //debugPrint('/// LOADING BOOK TILE');
           ScaffoldMessenger.of(
             context,
@@ -128,9 +136,16 @@ class _LibraryPageState extends State<LibraryPage> {
 
   @override
   Widget build(BuildContext context) {
+    final supabase = Supabase.instance.client;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: CustomAppbar(title: "LIBRARY"),
+      appBar: CustomAppbar(title: "LIBRARY",firstBtnFunc: (){
+        supabase.auth.signOut();
+        ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("You have been Signed Out!"), backgroundColor: Colors.red),
+      );
+        Navigator.of(context).pushReplacement(transitionPage(() => LoginPage()));
+      }),
       body: Column(
         children: [
           Row(
@@ -172,19 +187,6 @@ class _LibraryPageState extends State<LibraryPage> {
                       children: [
                         ...eBooks.map((element) {
                           return GestureDetector(
-                            onLongPress: () async {
-                              final index = eBooks.indexOf(element);
-                              setState(() {
-                                eBooks.removeAt(index);
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    "Removed Book: '${element['title']}' from Library",
-                                  ),
-                                ),
-                              );
-                            },
                             onTap: () {
                               showModalBottomSheet(
                                 backgroundColor: Color.fromRGBO(16, 19, 24, 1),

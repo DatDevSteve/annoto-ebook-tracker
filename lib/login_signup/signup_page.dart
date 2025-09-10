@@ -5,6 +5,7 @@ import 'package:annoto/ui_elements/transitions.dart';
 // Removed: import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -28,16 +29,27 @@ class _SignupPageState extends State<SignupPage> {
   Future<void> createUserWithEmailPasswd() async {
     final email = _emailController.text.trim();
     final password = _passwdController.text.trim();
+    final auth = Supabase.instance.client.auth;
 
     // Placeholder for local signup logic or validation
     if (email == "" || password == "") {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter a valid Email ID or Password")),
+        SnackBar(content: Text("Please enter a valid Email ID or Password"), backgroundColor: Colors.red,),
       );
       return;
     }
-    // Directly navigate to HomeScreen for demo/local mode
-    Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
+     try {
+      final AuthResponse response = await auth.signUp(password: password, email: email);
+      if (response.session != null){
+        Navigator.of(context).pushReplacement(transitionPage(() => HomeScreen()));
+      }
+      
+
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString(), selectionColor: Colors.red,)),
+      );
+    }
   }
 
   @override

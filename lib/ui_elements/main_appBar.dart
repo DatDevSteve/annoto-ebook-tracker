@@ -46,9 +46,7 @@ class _CustomAppbarState extends State<CustomAppbar> {
       backgroundColor: Color.fromRGBO(16, 19, 24, 1),
       centerTitle: true,
       leading: TextButton(
-        onPressed: () {
-          
-        },
+        onPressed: widget.firstBtnFunc as void Function()?,
         child: Icon((widget.firstBtnIco ?? Icons.exit_to_app) as IconData?, color: Colors.white, size: 30),
       ),
       actions: [
